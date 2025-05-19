@@ -73,7 +73,7 @@ class AuthUserController extends Controller
             $user->update([
                 'is_verified' => now(),
             ]);
-            Auth::login($user);
+            Auth::login($user, true);
             return redirect()->route('dashboard')->with('status', 'success');
         } else {
             return redirect()->back()->withErrors(['code' => 'Код неверный'])

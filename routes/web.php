@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,9 +15,17 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function (){
+    Route::get('/dashboard',[ProfileController::class, 'dashboard'] )->name('dashboard');
+
+    Route::get('/users', [ProfileController::class, 'users'])->name('users');
+
+    Route::get('/news', [ProfileController::class, 'news'])->name('news');
+
+    Route::get('/news/search', [NewsController::class, 'search'])->name('news.search');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

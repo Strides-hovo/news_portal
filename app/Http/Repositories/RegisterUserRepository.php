@@ -23,7 +23,7 @@ final  class RegisterUserRepository extends BaseRepository
         return $user;
     }
 
-    public function createUser(array $userData, string $code): User
+    public function createUser(array $userData, int $code): User
     {
         return User::create([
             'name' => $userData['name'],

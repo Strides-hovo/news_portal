@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace App\Http\Repositories;
 
-use App\Jobs\RabbitMqPublisher;
+use App\Jobs\AuthCodeNotificationPublisher;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 class BaseRepository
 {
 
-    public function __construct(protected RabbitMqPublisher $rabbitMqNotificationService)
+    public function __construct(protected AuthCodeNotificationPublisher $rabbitMqNotificationService)
     {}
 
     protected function generateCode(): int

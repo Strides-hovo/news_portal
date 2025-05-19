@@ -1,6 +1,5 @@
 <?php
 
-use App\Jobs\RabbitMqConsumer;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -10,6 +9,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
+        channels: __DIR__.'/../routes/channels.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
@@ -20,9 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
 
-        $schedule->call(function () {
-            app(RabbitMqConsumer::class)->listen();
-        })->everyMinute();
+        $schedule->command('app:auth-code-notification')->everyMinute();
+        $schedule->command('app:import-news')->cron('0 */1 * * *');
+        $schedule->command('app:import-news-listener')->everyMinute();
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
     })->create();

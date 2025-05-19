@@ -40,8 +40,20 @@
 
 ---
 
+ 
 ## 🛠 **Установка проекта**
 1. **Клонирование репозитория**
    ```bash
    git clone https://github.com/your-repository/news-aggregator.git
    cd news-aggregator
+   supervizor php artisan schedule:work
+   
+2. **Supervisor**
+```bash
+   [program:rabbit_consumer]
+   command=php artisan schedule:work
+   numprocs=1  
+   process_name=%(program_name)s
+   autorestart=true
+```
+   
