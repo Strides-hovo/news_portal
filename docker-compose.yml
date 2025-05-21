@@ -1,0 +1,131 @@
+version: '3.8'
+
+services:
+  # Nginx Service
+  nginx:
+    build:
+      context: ./docker/nginx
+    container_name: app_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5173:5173"
+    volumes:
+      - ./src:/var/www/laravel
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - php
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  # PHP Service
+  php:
+    build:
+      context: ./docker/php
+    image: app_php
+    container_name: app_php
+    volumes:
+      - ./src:/var/www/laravel
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/local.ini
+    depends_on:
+      - mysql
+      - rabbitmq
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  # Supervisor Service
+  supervisor:
+    build:
+      context: ./docker/supervisor
+    image: app_supervisor
+    container_name: app_supervisor
+    volumes:
+      - ./src:/var/www/laravel
+      - ./docker/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
+      - ./docker/supervisor/conf.d:/etc/supervisor/conf.d
+    depends_on:
+      - php
+    networks:
+      - app_network
+    restart: unless-stopped
+
+
+
+  # MySQL Service
+  mysql:
+    image: mysql:8
+    container_name: app_mysql
+    env_file: src/.env
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker/mysql_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD:-root}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # RabbitMQ Service
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: app_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  reverb:
+    image: app_php
+    container_name: app_reverb
+    # В точности запускаем ту команду, что вы приводите вручную
+    command: [ "php", "artisan", "reverb:start", "--host=0.0.0.0", "--port=8080" ]
+    volumes:
+      - ./src:/var/www/laravel
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/local.ini
+    ports:
+      - "8080:8080"
+    depends_on:
+      - php
+    networks:
+      - app_network
+    restart: unless-stopped
+
+
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+  rabbitmq_data:
+    driver: local

@@ -1,24 +1,18 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "vite build",
-        "dev": "vite"
-    },
-    "devDependencies": {
-        "@inertiajs/vue3": "^2.0.0",
-        "@laravel/echo-vue": "^2.1.4",
-        "@tailwindcss/forms": "^0.5.3",
-        "@tailwindcss/vite": "^4.0.0",
-        "@vitejs/plugin-vue": "^5.0.0",
-        "autoprefixer": "^10.4.12",
-        "axios": "^1.8.2",
-        "concurrently": "^9.0.1",
-        "laravel-echo": "^2.1.4",
-        "laravel-vite-plugin": "^1.2.0",
-        "postcss": "^8.4.31",
-        "tailwindcss": "^3.2.1",
-        "vite": "^6.2.4",
-        "vue": "^3.4.0"
-    }
+  "name": "laravel-docker",
+  "private": true,
+  "scripts": {
+    "dev": "docker-compose up -d",
+    "build": "docker-compose build",
+    "stop": "docker-compose stop",
+    "down": "docker-compose down",
+    "logs": "docker-compose logs -f",
+    "shell:php": "docker-compose exec php sh",
+    "shell:nginx": "docker-compose exec nginx sh",
+    "shell:mysql": "docker-compose exec mysql sh",
+    "shell:rabbitmq": "docker-compose exec rabbitmq sh",
+    "shell:supervisor": "docker-compose exec supervisor sh",
+    "composer": "docker-compose exec php composer",
+    "artisan": "docker-compose exec php php artisan"
+  }
 }
