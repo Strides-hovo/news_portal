@@ -5,7 +5,7 @@ A complete Docker environment for Laravel applications with Nginx, PHP-FPM, MySQ
 ## Services
 
 - **Nginx** - Alpine, web server
-- **PHP** - 8.2-FPM-Alpine with common extensions
+- **PHP** - 8.2-FPM with extensions
 - **MySQL** - Version 8
 - **RabbitMQ** - With management interface
 - **Supervisor** - For managing Laravel queue workers
@@ -22,6 +22,11 @@ A complete Docker environment for Laravel applications with Nginx, PHP-FPM, MySQ
 │   ├── php/
 │   │   ├── Dockerfile
 │   │   └── php.ini
+│   ├   ── supervisor/
+│   │       ├── Dockerfile
+│   │       └── supervisord.conf
+│   ├           conf.d/
+│   │       └── laravel-worker.conf
 │   ├── supervisor/
 │   │   ├── Dockerfile
 │   │   ├── supervisord.conf
@@ -30,20 +35,14 @@ A complete Docker environment for Laravel applications with Nginx, PHP-FPM, MySQ
 │   └── mysql/
 │       ├── my.cnf
 │       └── init/
+         mysql_data/
 ├── src/                    # Laravel application code goes here
 ├── .env                    # Environment variables
 └── docker-compose.yml      # Docker Compose configuration
 ```
 
-## Getting Started
 
-1. Clone your Laravel project into the `src` directory
-2. Configure environment variables in `.env` file
-3. Start the containers:
 
-```bash
-docker-compose up -d
-```
 
 ## Accessing Services
 
@@ -54,26 +53,14 @@ docker-compose up -d
 ## Useful Commands
 
 ```bash
-# Start all containers
-npm run dev
+# Build Frontend vs Backend containers
+npm run build
 
 # Stop all containers
-npm run stop
+composer install
 
 # Remove all containers
-npm run down
-
-# View logs
-npm run logs
-
-# Access PHP container shell
-npm run shell:php
-
-# Run Composer commands
-npm run composer install
-
-# Run Artisan commands
-npm run artisan migrate
+php artisan migrate
 ```
 
 ## Configuration
@@ -87,17 +74,9 @@ You can modify service configurations in the following files:
 
 ## Adding Laravel Code
 [README.md](..%2Fnews_portal%2FREADME.md)
-Create a new Laravel project in the `src` directory:
+Laravel project in  `src` directory:
 
-```bash
-composer create-project laravel/laravel src
-```
 
-Or clone an existing Laravel project:
-
-```bash
-git clone your-repository src
-```
 
 2. **Supervisor**
 ```bash

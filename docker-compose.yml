@@ -69,7 +69,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ./docker/mysql_data:/var/lib/mysql
+      - ./docker/mysql/mysql_data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
     networks:
