@@ -44,9 +44,11 @@
 ## 🛠 **Установка проекта**
 1. **Клонирование репозитория**
    ```bash
-   git clone https://github.com/your-repository/news-aggregator.git
-   cd news-aggregator
-   supervizor php artisan schedule:work
+   git clone https://github.com/Strides-hovo/news_portal.git
+   cd news_portal
+   composer install
+   npm install
+   ```
    
 2. **Supervisor**
 ```bash
@@ -56,4 +58,11 @@
    process_name=%(program_name)s
    autorestart=true
 ```
-   
+3. Reverb
+```bash
+  [program:reverb_start]
+   command=php artisan reverb:start
+   numprocs=1  
+   process_name=%(program_name)s
+   autorestart=true
+```

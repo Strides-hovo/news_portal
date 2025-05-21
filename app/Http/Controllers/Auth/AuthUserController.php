@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Http\Repositories\AuthUserRepository;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\VerificationRequest;
-use App\Models\User;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -67,12 +66,9 @@ class AuthUserController extends Controller
         $data = $request->validated();
         $userId = $data['userId'];
         $code = $data['code'];
+        $user = $this->repository->verification($code, $userId);
 
-        if ($this->repository->verifiedCode($code, $userId)) {
-            $user = User::findOrFail($userId);
-            $user->update([
-                'is_verified' => now(),
-            ]);
+        if ($user) {
             Auth::login($user, true);
             return redirect()->route('dashboard')->with('status', 'success');
         } else {

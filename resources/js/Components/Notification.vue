@@ -2,14 +2,16 @@
     import {ref} from "vue";
 
     const props = defineProps({
-        userName: {
+        message: {
             type: String,
             required: true
         }
     });
+    const emit = defineEmits(['update:message']);
 
     const isOpen = ref(true);
     const closeMessage = () => {
+        emit('update:message', null);
         isOpen.value = !isOpen.value;
     }
 </script>
@@ -17,13 +19,13 @@
 <template>
 
     <div
-        v-if="isOpen"
+        v-if="message"
         class="flex items-center w-full max-w-xs p-4 space-x-4 rtl:space-x-reverse text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow-sm justify-between fixed top-4 right-4 border border-emerald-900" role="alert">
         <span class="flex">
             <svg class="w-5 h-5 text-blue-600 dark:text-blue-500 rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 17 8 2L9 1 1 19l8-2Zm0 0V9"/>
         </svg>
-        <span class="ps-4 text-sm font-normal"> Регистрировалось в портале новый ползовател -- <b>{{  userName }} </b> -- </span>
+        <span class="ps-4 text-sm font-normal"> <b>{{  message }} </b>  </span>
         </span>
 
         <button

@@ -6,8 +6,17 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import {useEchoPublic} from "@laravel/echo-vue";
+import Notification from "@/Components/Notification.vue";
 
 const showingNavigationDropdown = ref(false);
+
+const message = ref(null)
+
+useEchoPublic('registered', 'UserConnectEvent', (event) => {
+    message.value = event.message
+})
+
 </script>
 
 <template>
@@ -93,11 +102,7 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink
-                                            :href="route('profile.edit')"
-                                        >
-                                            Profile
-                                        </DropdownLink>
+
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
@@ -216,5 +221,7 @@ const showingNavigationDropdown = ref(false);
                 <slot />
             </main>
         </div>
+
+        <Notification v-if="message" v-model:message="message"  />
     </div>
 </template>

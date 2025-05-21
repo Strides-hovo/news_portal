@@ -18,8 +18,9 @@ final  class RegisterUserRepository extends BaseRepository
         $user = $this->createUser($userData, $code);
         cache()->put('code_' . $user->id, $code, now()->addMinutes(10));
         cache()->put('userId_' . $user->id, $user->id, now()->addMinutes(10));
-        $this->rabbitMqNotificationService->handle($user->email, $code);
+        cache()->put('context_' . $user->id, 'register', now()->addMinutes(10));
 
+        $this->rabbitMqNotificationService->handle($user->email, $code);
         return $user;
     }
 

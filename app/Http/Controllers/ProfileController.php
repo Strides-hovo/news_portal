@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\User;
+use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 
 class ProfileController extends Controller
