@@ -114,6 +114,7 @@ services:
       - "8080:8080"
     depends_on:
       - php
+      - mysql
     networks:
       - app_network
     restart: unless-stopped
