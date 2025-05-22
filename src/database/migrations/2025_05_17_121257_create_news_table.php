@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('preview');
             $table->text('content');
+            $table->fullText(['preview', 'content']);
             $table->timestamps();
         });
     }

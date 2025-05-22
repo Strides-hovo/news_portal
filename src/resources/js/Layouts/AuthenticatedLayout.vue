@@ -17,6 +17,10 @@ useEchoPublic('registered', 'UserConnectEvent', (event) => {
     message.value = event.message
 })
 
+useEchoPublic('news', 'ImportNewsEvent', (event) => {
+    message.value = event.message
+})
+
 </script>
 
 <template>
