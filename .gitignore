@@ -4,4 +4,4 @@ src/node_modules
 src/public/build
 src/.env
 .env
-docker/mysql_data
+docker/mysql_data/
