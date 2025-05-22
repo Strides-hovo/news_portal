@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import {Head, useForm} from '@inertiajs/vue3';
+import NavLink from "@/Components/NavLink.vue";
 
 defineProps({
     status: {
@@ -56,5 +57,10 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+
+        <NavLink :href="route('register')" class="mt-4">
+            Не зарегистрированы ?
+        </NavLink>
+
     </GuestLayout>
 </template>

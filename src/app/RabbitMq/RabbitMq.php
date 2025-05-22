@@ -28,7 +28,8 @@ class RabbitMq
             config('rabbitmq.host'),
             config('rabbitmq.port'),
             config('rabbitmq.username'),
-            config('rabbitmq.password')
+            config('rabbitmq.password'),
+            '/'
         );
         $this->channel = $this->connection->channel();
     }

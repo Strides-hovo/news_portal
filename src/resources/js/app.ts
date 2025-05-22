@@ -11,8 +11,12 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 configureEcho({
     broadcaster: 'reverb',
-    host: window.location.hostname + ':8080',
+    wsHost: 'localhost',
+    wsPort: 8080,
+    forceTLS: false,
+    disableStats: true,
 });
+
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
