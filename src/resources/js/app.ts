@@ -11,10 +11,11 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 configureEcho({
     broadcaster: 'reverb',
-    wsHost: 'localhost',
+    wsHost: window.location.hostname,
     wsPort: 8080,
     forceTLS: false,
     disableStats: true,
+    enabledTransports: ['ws'],
 });
 
 
