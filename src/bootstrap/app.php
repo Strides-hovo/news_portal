@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withSchedule(function (Schedule $schedule) {
 
         $schedule->command('app:auth-code-notification')->everyMinute();
-        $schedule->command('app:import-news')->cron('0 */1 * * *');
+        $schedule->command('app:import-news')->everyFourHours();
         $schedule->command('app:import-news-listener')->everyMinute();
 
     })
