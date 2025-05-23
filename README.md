@@ -35,10 +35,10 @@ A complete Docker environment for Laravel applications with Nginx, PHP-FPM, MySQ
 │   └── mysql/
 │       ├── my.cnf
 │       └── init/
-         mysql_data/
-├── src/                    # Laravel application code goes here
-├── .env                    # Environment variables
-└── docker-compose.yml      # Docker Compose configuration
+            mysql_data/
+├── src/                   
+├── .env                  
+└── docker-compose.yml      
 ```
 
 
