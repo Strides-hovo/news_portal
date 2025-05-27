@@ -5,3 +5,4 @@ src/public/build
 src/.env
 .env
 docker/mysql/mysql_data/
+deploy.sh
