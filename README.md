@@ -9,7 +9,7 @@ A complete Docker environment for Laravel applications with Nginx, PHP-FPM, MySQ
 - **MySQL** - Version 8
 - **RabbitMQ** - With management interface
 - **Supervisor** - For managing Laravel queue workers
-- **Additional Tools** - Composer, Git, npm
+- **Additional Tools** - Composer, Git, npm, CI/CD
 
 ## Directory Structure
 
