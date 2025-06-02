@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static whereRaw(string $string, array $array)
+ * @method static where(string $string, string $string1, mixed $id)
+ * @method static paginate(int $int)
+ * @property int $id
+ * @property string $preview
+ * @property string $title
  */
 class News extends Model
 {

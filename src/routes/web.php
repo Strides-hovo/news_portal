@@ -21,6 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('/users', [ProfileController::class, 'users'])->name('users');
 
     Route::get('/news', [ProfileController::class, 'news'])->name('news');
+    Route::get('/news/{id}', [ProfileController::class, 'show'])->name('newsId');
 
     Route::get('/news/search', [NewsController::class, 'search'])->name('news.search');
 });

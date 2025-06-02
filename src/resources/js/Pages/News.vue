@@ -127,10 +127,11 @@ input[type="search"]::-webkit-search-cancel-button {
                                     <div class="mt-4 flex justify-between">
                                         <div>
                                             <h3 class="text-sm text-gray-700">
-<!--                                                <a href="#">-->
-<!--                                                    <span aria-hidden="true" class="absolute inset-0"></span>-->
-<!--                                                    Basic Tee-->
-<!--                                                </a>-->
+                                                <Link
+                                                    :href="route('newsId', newsItem.id)"
+                                                >
+                                                    <span aria-hidden="true" class="absolute inset-0">Подробно ...</span>
+                                                </Link>
                                             </h3>
                                             <p class="mt-1 text-sm text-gray-500">{{ newsItem.preview.substring(0, 80) }} ...</p>
                                         </div>
